@@ -256,10 +256,10 @@
   // #define dfrobot_btnSELECT_analog 790  
   
   // button to memory mappings (0 = command button, 1 = memory 1, 2 = memory 2, etc.)
-  #define dfrobot_btnRIGHT  2
-  #define dfrobot_btnUP     1
+  #define dfrobot_btnRIGHT  4
+  #define dfrobot_btnUP     2
   #define dfrobot_btnDOWN   3
-  #define dfrobot_btnLEFT   4
+  #define dfrobot_btnLEFT   1
   #define dfrobot_btnSELECT 0
   #define dfrobot_btnNONE   255 // do not change
 

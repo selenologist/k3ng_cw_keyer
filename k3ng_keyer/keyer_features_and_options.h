@@ -2,7 +2,7 @@
 // FEATURES add more bytes to the compiled binary, OPTIONS change code behavior
 
 
-// #define FEATURE_BUTTONS
+#define FEATURE_BUTTONS // uses OPTION_DFROBOT_LCD_COMMAND_BUTTONS
 // #define FEATURE_COMMAND_MODE
 // #define FEATURE_COMMAND_LINE_INTERFACE // Command Line Interface functionality
 // #define FEATURE_MEMORIES               // on the Arduino Due, you must have FEATURE_EEPROM_E24C1024 and E24C1024 EEPROM hardware in order to compile this
@@ -16,7 +16,7 @@
 // #define FEATURE_SIDETONE_NEWTONE       // Use the NewTone library, ~1k smaller code size than the standard tone library. Uses timer1 (pins 9 or 10)  https://bitbucket.org/teckel12/arduino-new-tone/wiki/Home
 // #define FEATURE_SERIAL_HELP
 // #define FEATURE_HELL                   // Hellscreiber Mode
-// #define FEATURE_PS2_KEYBOARD           // Use a PS2 keyboard to send code - Change keyboard layout (non-US) in K3NG_PS2Keyboard.h.  Additional options below.
+#define FEATURE_PS2_KEYBOARD           // Use a PS2 keyboard to send code - Change keyboard layout (non-US) in K3NG_PS2Keyboard.h.  Additional options below.
 // #define FEATURE_USB_KEYBOARD           // Use a USB keyboard to send code - Uncomment three lines in k3ng_keyer.ino (search for note_usb_uncomment_lines)
 // #define FEATURE_CW_COMPUTER_KEYBOARD   // Have an Arduino Due or Leonardo act as a USB HID (Human Interface Device) keyboard and use the paddle to "type" characters on the computer -- uncomment this line in ino file: #include <Keyboard.h>
 // #define FEATURE_DEAD_OP_WATCHDOG
@@ -29,7 +29,7 @@
 // #define FEATURE_LCD_ADAFRUIT_BACKPACK   // Adafruit I2C LCD Backup using MCP23008 (courtesy Josiah Ritchie, KE0BLL)
 // #define FEATURE_LCD_YDv1                // YourDuino I2C LCD display with old LCM 1602 V1 ic
 // #define FEATURE_LCD_TWILIQUIDCRYSTAL    // I2C 1602 with backlight using https://github.com/arnakazim/TwiLiquidCrystal-library
-// #define FEATURE_LCD1602_N07DH           // http://linksprite.com/wiki/index.php5?title=16_X_2_LCD_Keypad_Shield_for_Arduino
+#define FEATURE_LCD1602_N07DH           // http://linksprite.com/wiki/index.php5?title=16_X_2_LCD_Keypad_Shield_for_Arduino
 // #define FEATURE_LCD_SAINSMART_I2C
 // #define FEATURE_LCD_FABO_PCF8574        // https://github.com/FaBoPlatform/FaBoLCD-PCF8574-Library
 // #define FEATURE_LCD_MATHERTEL_PCF8574   // https://github.com/mathertel/LiquidCrystal_PCF8574
@@ -122,7 +122,7 @@
 
 #define OPTION_EXCLUDE_EXTENDED_CLI_COMMANDS
 
-// #define OPTION_DFROBOT_LCD_COMMAND_BUTTONS
+#define OPTION_DFROBOT_LCD_COMMAND_BUTTONS
 
 // #define OPTION_EXCLUDE_MILL_MODE
 // #define OPTION_NO_ULTIMATIC // reduce memory usage by removing ultimatic code.
