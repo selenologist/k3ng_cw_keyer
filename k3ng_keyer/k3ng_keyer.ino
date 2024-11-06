@@ -3722,6 +3722,34 @@ void check_sleep(){
 
 //-------------------------------------------------------------------------------------------------------
 
+void backlight_off() {
+  #ifdef DEBUG_BACKLIGHT
+    debug_serial_port->println(F("check_backlight: I'm asleep!"));
+  #endif //DEBUG_BACKLIGHT
+
+  if (keyer_power_led){
+    analogWrite(keyer_power_led,keyer_power_led_asleep_duty);
+  }
+  
+  #ifndef VK2LNA_TRIMMING
+    lcd.noBacklight();
+  #endif
+}
+
+void backlight_on() {
+  #ifdef DEBUG_BACKLIGHT
+    debug_serial_port->println(F("check_backlight: I'm awake!"));
+  #endif //DEBUG_BACKLIGHT
+
+  if (keyer_power_led){
+    analogWrite(keyer_power_led,keyer_power_led_awake_duty);
+  }
+  
+  #ifndef VK2LNA_TRIMMING
+    lcd.backlight();
+  #endif
+}
+
 #ifdef FEATURE_LCD_BACKLIGHT_AUTO_DIM
 void check_backlight() {
 
@@ -3732,26 +3760,9 @@ void check_backlight() {
   last_bl_check = millis();
 
   if ((last_bl_check - last_active_time) > ((unsigned long)dim_backlight_inactive_time*60000)){
-
-    #ifdef DEBUG_BACKLIGHT
-      debug_serial_port->println(F("check_backlight: I'm asleep!"));
-    #endif //DEBUG_BACKLIGHT
-
-    if (keyer_power_led){
-      analogWrite(keyer_power_led,keyer_power_led_asleep_duty);
-    }
-    lcd.noBacklight();
-
+    backlight_off();
   } else {
-
-    #ifdef DEBUG_BACKLIGHT
-      debug_serial_port->println(F("check_backlight: I'm awake!"));
-    #endif //DEBUG_BACKLIGHT
-
-    if (keyer_power_led){
-      analogWrite(keyer_power_led,keyer_power_led_awake_duty);
-    }
-    lcd.backlight();
+    backlight_on();
   }
 
 
@@ -3802,7 +3813,7 @@ void service_display() {
     } else {
       if (lcd_scroll_buffer[y].charAt(x) > 0){
         #ifdef FEATURE_LCD_BACKLIGHT_AUTO_DIM
-          lcd.backlight();
+          backlight_on();
         #endif  // FEATURE_LCD_BACKLIGHT_AUTO_DIM
         lcd.print(lcd_scroll_buffer[y].charAt(x));
       }
@@ -3957,7 +3968,7 @@ void lcd_clear() {
 void lcd_center_print_timed(String lcd_print_string, byte row_number, unsigned int duration)
 {
   #ifdef FEATURE_LCD_BACKLIGHT_AUTO_DIM
-    lcd.backlight();
+    backlight_on();
   #endif  //FEATURE_LCD_BACKLIGHT_AUTO_DIM
   #ifndef FEATURE_OLED_SSD1306
   lcd.noCursor();//sp5iou 20180328
@@ -3989,7 +4000,7 @@ void lcd_center_print_timed(String lcd_print_string, byte row_number, unsigned i
 void clear_display_row(byte row_number)
 {
   #ifdef FEATURE_LCD_BACKLIGHT_AUTO_DIM
-    lcd.backlight();
+    backlight_on();
   #endif  //FEATURE_LCD_BACKLIGHT_AUTO_DIM
   #ifndef FEATURE_OLED_SSD1306
   lcd.noCursor();//sp5iou 20180328
@@ -5097,6 +5108,9 @@ void check_ps2_keyboard()
             manual_ptt_invoke = 1;
             ptt_key();
           }
+          break;
+        case PS2_V_CTRL :
+          toggle_pot_configuration();
           break;
 
         case PS2_W_CTRL :
@@ -7598,6 +7612,40 @@ long get_cw_input_from_user(unsigned int exit_time_milliseconds) {
 //-------------------------------------------------------------------------------------------------------
 
 #ifdef FEATURE_COMMAND_MODE
+void toggle_pot_configuration() {
+  if (configuration.pot_activated) {
+    configuration.pot_activated = 0;
+    #if defined(FEATURE_COMMAND_MODE_ENHANCED_CMD_ACKNOWLEDGEMENT)
+      send_chars((char*)command_v_potentiometer_off);
+    #endif
+    #ifdef FEATURE_DISPLAY
+      if (LCD_COLUMNS > 14) {
+        lcd_center_print_timed("Pot Deactivated", 0, default_display_msg_delay);
+      } else {
+        lcd_center_print_timed("Pot Off", 0, default_display_msg_delay);
+      }
+    #endif
+  }
+  else {
+    configuration.pot_activated = 1;
+    #if defined(FEATURE_COMMAND_MODE_ENHANCED_CMD_ACKNOWLEDGEMENT)
+      send_chars((char*)command_v_potentiometer_on);
+    #endif
+    #ifdef FEATURE_DISPLAY
+      if (LCD_COLUMNS > 13){
+        lcd_center_print_timed("Pot Activated", 0, default_display_msg_delay);
+      } else {
+        lcd_center_print_timed("Pot On", 0, default_display_msg_delay);
+      }
+    #endif
+  }
+  #if !defined(FEATURE_COMMAND_MODE_ENHANCED_CMD_ACKNOWLEDGEMENT)
+    send_char(command_mode_acknowledgement_character, 0);
+  #endif
+
+  config_dirty = 1;
+}
+
 void command_mode() {
 
   keyer_machine_mode = KEYER_COMMAND_MODE;
@@ -8020,35 +8068,7 @@ void command_mode() {
         case 2: command_tuning_mode(); break;                             // T - tuning mode
         #ifdef FEATURE_POTENTIOMETER
           case 1112:  // V - toggle pot active
-            if (configuration.pot_activated) {
-              configuration.pot_activated = 0;
-              #if defined(FEATURE_COMMAND_MODE_ENHANCED_CMD_ACKNOWLEDGEMENT)
-                send_chars((char*)command_v_potentiometer_off);
-              #endif
-              #ifdef FEATURE_DISPLAY
-                if (LCD_COLUMNS > 14) {
-                  lcd_center_print_timed("Pot Deactivated", 0, default_display_msg_delay);
-                } else {
-                  lcd_center_print_timed("Pot Off", 0, default_display_msg_delay);
-                }
-              #endif
-            } else {
-              configuration.pot_activated = 1;
-              #if defined(FEATURE_COMMAND_MODE_ENHANCED_CMD_ACKNOWLEDGEMENT)
-                send_chars((char*)command_v_potentiometer_on);
-              #endif
-              #ifdef FEATURE_DISPLAY
-                if (LCD_COLUMNS > 13){
-                  lcd_center_print_timed("Pot Activated", 0, default_display_msg_delay);
-                } else {
-                  lcd_center_print_timed("Pot On", 0, default_display_msg_delay);
-                }
-              #endif
-            }
-            config_dirty = 1;
-            #if !defined(FEATURE_COMMAND_MODE_ENHANCED_CMD_ACKNOWLEDGEMENT)
-              send_char(command_mode_acknowledgement_character, 0);
-            #endif
+            toggle_pot_configuration();
             break;
         #endif
 
@@ -18781,6 +18801,10 @@ void initialize_display(){
       lcd.clear(); // you have to ;o)
     #endif //OPTION_DISPLAY_NON_ENGLISH_EXTENSIONS
 
+    #ifdef VK2LNA_TRIMMING
+    // the code here is clunky, just do this instead
+    lcd_center_print_timed("VK2LNA K3NGer", 0, 4000);
+    #else
      if (LCD_COLUMNS < 9) {
       lcd_center_print_timed("K3NGKeyr", 0, 4000);
     } else {
@@ -18797,6 +18821,7 @@ void initialize_display(){
       #endif                                                        // OPTION_PERSONALIZED_STARTUP_SCREEN
       if (LCD_ROWS > 3) lcd_center_print_timed("V: " + String(CODE_VERSION), 3, 4000);      // display the code version on the fourth line of the display
     }
+    #endif // VK2LNA_TRIMMING
   #endif //FEATURE_DISPLAY
 
   if (keyer_machine_mode != BEACON) {
@@ -19394,6 +19419,10 @@ void KbdRptParser::OnKeyDown(uint8_t mod, uint8_t key)
           manual_ptt_invoke = 1;
           ptt_key();
         }
+        break;
+
+      case 0x19 : // CTRL-V
+        toggle_pot_configuration();
         break;
 
       case 0x1a : // CTRL-W

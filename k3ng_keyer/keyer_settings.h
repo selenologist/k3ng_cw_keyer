@@ -39,8 +39,8 @@
 #define winkey_xoff_threshold 20         // the number of chars in the buffer when we begin sending XOFFs
 #define winkey_xon_threshold 10          // the number of chars in the buffer below which we deactivate XOFF
 #define default_memory_repeat_time 3000  // time in milliseconds
-#define LCD_COLUMNS 11
-#define LCD_ROWS 4
+#define LCD_COLUMNS 16
+#define LCD_ROWS 2
 #define lcd_i2c_address_mathertel_PCF8574 0x27             // I2C address of display for FEATURE_LCD_MATHERTEL_PCF8574
 #define lcd_i2c_address_fdebrander_lcd 0x27                // I2C address of display for FEATURE_LCD_I2C_FDEBRABANDER
 #define lcd_i2c_address_ydv1_lcd 0x27                      // I2C address of display for FEATURE_LCD_YDv1
@@ -53,7 +53,7 @@
 #define serial_leading_zeros 1            // set to 1 to activate leading zeros in serial numbers (i.e. #1 = 001)
 #define serial_cut_numbers 0              // set to 1 to activate cut numbers in serial numbers (i.e. #10 = 1T, #19 = 1N)
 #define go_to_sleep_inactivity_time 10    // minutes - FEATURE_SLEEP
-#define dim_backlight_inactive_time 5     // minutes - FEATURE_LCD_BACKLIGHT_AUTO_DIM
+#define dim_backlight_inactive_time 1     // minutes - FEATURE_LCD_BACKLIGHT_AUTO_DIM
 #define default_cmos_super_keyer_iambic_b_timing_percent 33 // use with FEATURE_CMOS_SUPER_KEYER_IAMBIC_B_TIMING; should be between 0 to 99 % (0% = true iambic b;100% = iambic a behavior)
 #define default_cw_echo_timing_factor 1.75 // "factory default" setting
 #define default_autospace_timing_factor 2.0 // "factory default" setting
@@ -75,7 +75,7 @@
 #define eeprom_write_time_ms 30000
 
 #ifdef FEATURE_BUTTONS
-  #define analog_buttons_number_of_buttons 4  // includes the command button (command button + 3 memory buttons = 4)
+  #define analog_buttons_number_of_buttons 5  // includes the command button (command button + 3 memory buttons = 4)
   #define analog_buttons_r1 10
   #define analog_buttons_r2 1
 #endif
@@ -242,18 +242,18 @@
 #if defined(OPTION_DFROBOT_LCD_COMMAND_BUTTONS)
 
   // For V1.1 board use these values
-  #define dfrobot_btnRIGHT_analog 50
-  #define dfrobot_btnUP_analog 250
-  #define dfrobot_btnDOWN_analog 450
-  #define dfrobot_btnLEFT_analog 650
-  #define dfrobot_btnSELECT_analog 850  
+  //#define dfrobot_btnRIGHT_analog 50
+  //#define dfrobot_btnUP_analog 250
+  //#define dfrobot_btnDOWN_analog 450
+  //#define dfrobot_btnLEFT_analog 650
+  //#define dfrobot_btnSELECT_analog 850  
 
   // For V1.0 board use these values
-  // #define dfrobot_btnRIGHT_analog 50
-  // #define dfrobot_btnUP_analog 195
-  // #define dfrobot_btnDOWN_analog 380
-  // #define dfrobot_btnLEFT_analog 555
-  // #define dfrobot_btnSELECT_analog 790  
+  #define dfrobot_btnRIGHT_analog 50
+  #define dfrobot_btnUP_analog 195
+  #define dfrobot_btnDOWN_analog 380
+  #define dfrobot_btnLEFT_analog 555
+  #define dfrobot_btnSELECT_analog 790  
   
   // button to memory mappings (0 = command button, 1 = memory 1, 2 = memory 2, etc.)
   #define dfrobot_btnRIGHT  4

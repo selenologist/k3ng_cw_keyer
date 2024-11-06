@@ -178,7 +178,7 @@ const PROGMEM unsigned char scan2ascii_ctrl[] = {
 	0, 0 /*Lalt*/, 0 /*Lshift*/, 0, 0 /*Lctrl*/, 'Q', '!', 0,
 	0, 0, PS2_Z_CTRL, 'S', PS2_A_CTRL, PS2_W_CTRL, '@', 0,
 	0, PS2_C_CTRL /*'C'*/, 'X', PS2_D_CTRL, PS2_E_CTRL, '$', '#', 0,
-	0, ' ', 'V', 'F', PS2_T_CTRL, 'R', '%', 0,
+	0, ' ', PS2_V_CTRL, 'F', PS2_T_CTRL, 'R', '%', 0,
 	0, PS2_N_CTRL, PS2_B_CTRL, PS2_H_CTRL, PS2_G_CTRL, 'Y', '^', 0,
 	0, 0, PS2_M_CTRL, 'J', PS2_U_CTRL, '&', '*', 0,
 	0, '<', 'K', PS2_I_CTRL, PS2_O_CTRL, ')', '(', 0,

@@ -20,9 +20,11 @@ A5 is the TX output - this goes through a 1k resistor to the base of a 2n2222 tr
 
 Sidetone is on pin 11 so I could get it off the ICSP header if I wanted (along with ground), but I haven't actually tried populating it yet.
 
-You could try dimming the backlight with D10 but I haven't bothered.
+The backlight is dimmed after a minute with D10. You can now toggle the potentiometer with CTRL-V.
 
 Pin 12 is free. Pin 13 is the onboard LED and is used to indicate command mode. It isn't exactly easy to see under the shield, though :)
+
+I don't seem to have the buttons working properly, but there isn't enough space for memories anyway, so eh. You can still bring up command mode by pressing RIGHT briefly.
 
 Original readme follows.
 
