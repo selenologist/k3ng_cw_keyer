@@ -21,7 +21,8 @@ A5 is the TX output - this goes through a 1k resistor to the base of a 2n2222 tr
 Sidetone is on pin 11 so I could get it off the ICSP header if I wanted (along with ground), but I haven't actually tried populating it yet.
 
 You could try dimming the backlight with D10 but I haven't bothered.
-(Pins 12 and 13 are free)
+
+Pin 12 is free. Pin 13 is the onboard LED and is used to indicate command mode. It isn't exactly easy to see under the shield, though :)
 
 Original readme follows.
 
